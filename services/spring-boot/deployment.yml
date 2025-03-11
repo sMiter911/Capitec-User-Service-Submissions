@@ -20,12 +20,5 @@ spec:
       containers:
         - name: spring-boot-user-service
           image: thapeloseema/capitec-user-service:backend-amd64
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
           ports:
             - containerPort: 8080
