@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-deployment
+  labels:
+    name: spring-boot-user-service
+    app: capitec-user-service
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      name: spring-boot-user-service
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        name: spring-boot-user-service
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: spring-boot-user-service
+          image: thapeloseema/capitec-user-service:backend-amd64
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8080
