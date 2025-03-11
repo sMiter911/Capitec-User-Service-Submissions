@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    name: postgres-user-service
+    app: capitec-user-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: postgres-user-service
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        name: postgres-user-service
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: postgres-user-service
+          image: postgres
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_PORT
