@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-deployment
+  labels:
+    name: angular-user-service
+    app: capitec-user-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: angular-user-service
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        name: angular-user-service
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: angular-user-service
+          image: thapeloseema/capitec-user-service:frontend-windows-latest
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 4200
