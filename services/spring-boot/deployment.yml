@@ -22,3 +22,17 @@ spec:
           image: thapeloseema/capitec-user-service:backend-amd64
           ports:
             - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db:5432/capitec_user_service
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-deployment-secret
+                  key: POSTGRES_PASSWORD
+        
